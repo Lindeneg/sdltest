@@ -4,19 +4,18 @@
 #include "../screen/screen.h"
 #include "../component/vector.h"
 #include "../component/line.h"
+#include "../component/triangle.h"
+#include "../component/rectangle.h"
 #include "../shape/shape.h"
 
-void DrawVector(Screen *screen, const Vector *vec, const unsigned int color);
+
 void DrawShapeArray(Screen *screen, const ShapeArray *shapeArray);
 
+void DrawVector(Screen *screen, const Vector *vec, const unsigned int color);
 void DrawLine(Screen *screen, Line *line);
+void DrawTriangle(Screen *screen, Triangle *triangle);
+void DrawRectangle(Screen *screen, Rectangle *rectangle);
 
-/*
-void DrawLine(Screen * screen, char * line);
-void DrawRectangle(Screen * screen, char * rectangle);
-void DrawTriangle(Screen * screen, char * triangle);
-void DrawCircle(Screen * screen, char * circle);
-*/
 
 #endif /* SCREEN_DRAW_H_ */
 
