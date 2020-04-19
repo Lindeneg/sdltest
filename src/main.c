@@ -12,6 +12,8 @@
 
 #include "./component/vector.h"
 #include "./component/line.h"
+#include "./component/triangle.h"
+#include "./component/rectangle.h"
 
 #include "./shape/shape.h"
 
@@ -22,16 +24,27 @@ int main(void) {
 	ShapeArray * shapes = CreateEmptyShapeArray();
 
 
-	Line * line1 = CreateLine(CreateVector(0, 0), CreateVector(800, 800), RED);
+	Line * line1 = CreateLine(CreateVector(250, 250), CreateVector(440, 440), RED);
 	Line * line2 = CreateLine(CreateVector(0, 800), CreateVector(800, 0), BLUE);
+	Line * line3 = CreateLine(CreateVector(440, 440), CreateVector(740, 0), LIGHT_BLUE);
+
+	Triangle * tri0 = CreateTriangle(CreateVector(0, 0), CreateVector(0, 400), CreateVector(400, 400), PURPLE, false);
+
+	Rectangle * rect = CreateRectangle(CreateVector(400, 600), CreateVector(550, 550), YELLOW, false);
 
 	AddShapeToArray(shapes, line1, LINE);
 	AddShapeToArray(shapes, line2, LINE);
+	AddShapeToArray(shapes, line3, LINE);
+	AddShapeToArray(shapes, tri0, TRIANGLE);
+	AddShapeToArray(shapes, rect, RECTANGLE);
+
+	//RemoveShapeFromArray(shapes, line2, LINE);
+	//RemoveShapeFromArray(shapes, tri0, TRIANGLE);
+	//RemoveShapeFromArray(shapes, rect, RECTANGLE);
+
 
 	int isRunning = 1;
 	SDL_Event sdlEvent;
-
-	//RemoveShapeFromArray(shapes, line2, LINE);
 
 	while (isRunning) {
 
@@ -42,12 +55,12 @@ int main(void) {
 				break;	
 			}
 		}
+		RotateLine(shapes->lineArray->lines[0], 0.20);
 		DrawShapeArray(screen, shapes);
 		UpdateScreen(screen);
 
 	}
-	FreeComponent(line1, LINE);
-	FreeComponent(line2, LINE);
+	FreeShapeArray(shapes);
 	FreeScreen(screen);
 	return 0;
 }
