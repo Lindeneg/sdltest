@@ -2,11 +2,11 @@
 #define UTIL_CONSTANTS_H_
 
 #include <stdint.h>
-
+#include <stdbool.h>
 
 extern const float EPSILON;
 extern const float PI;
-extern const float TWO_PI; 
+extern const float TWO_PI;
 
 extern const unsigned int BLACK;
 extern const unsigned int LIGHT_BLUE;
