@@ -17,7 +17,7 @@ float GetLineLength(const Line *line);
 float GetLineMinDistanceFrom(const Line *line, const Vector *point);
 void GetLineClosetPoint(Vector *resultVec, const Line *line, const Vector *point);
 void GetLineMidPoint(Vector *resultVec, const Line *line);
-void RotateLine(Line *line, float angle);
+void RotateLine(Line *line, float angleInDegrees);
 bool AreEqualLines(const Line *line, const Line *otherLine);
 Line * CreateLine(Vector *p0, Vector *p1, const unsigned int color);
 

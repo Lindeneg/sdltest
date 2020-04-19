@@ -141,7 +141,7 @@ bool AreEqualVectors(const Vector *vec, const Vector *otherVec) {
 }
 
 Vector *CreateVector(float x, float y) {
-	Vector * vec = AllocMem(sizeof(Vector));
+	Vector * vec = (Vector *)AllocMem(sizeof(Vector));
 	vec->x = x;
 	vec->y = y;
 	vec->type = VECTOR;

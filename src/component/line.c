@@ -45,8 +45,11 @@ void GetLineMidPoint(Vector *resultVec, const Line *line) {
     resultVec->y = y;
 }
 
-void RotateLine(Line *line, float angle) {
-    RotateVector(line->p0, line->p1, angle);
+void RotateLine(Line *line, float angleInDegrees) {
+    if (angleInDegrees <= 1) {
+        float angle = angleInDegrees * PI / 180;
+        RotateVector(line->p1, line->p0, angle);
+    }
 }
 
 bool AreEqualLines(const Line *line, const Line *otherLine) {
@@ -57,7 +60,7 @@ bool AreEqualLines(const Line *line, const Line *otherLine) {
 }
 
 Line * CreateLine(Vector *p0, Vector *p1, const unsigned int color) {
-    Line *line = AllocMem(sizeof(Line));
+    Line *line = (Line *)AllocMem(sizeof(Line));
     line->p0 = p0;
     line->p1 = p1;
     line->color = color;
