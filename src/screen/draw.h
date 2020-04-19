@@ -6,6 +6,7 @@
 #include "../component/line.h"
 #include "../component/triangle.h"
 #include "../component/rectangle.h"
+#include "../component/circle.h"
 #include "../shape/shape.h"
 
 
@@ -15,6 +16,7 @@ void DrawVector(Screen *screen, const Vector *vec, const unsigned int color);
 void DrawLine(Screen *screen, Line *line);
 void DrawTriangle(Screen *screen, Triangle *triangle);
 void DrawRectangle(Screen *screen, Rectangle *rectangle);
+void DrawCircle(Screen *screen, Circle *circle);
 
 
 #endif /* SCREEN_DRAW_H_ */

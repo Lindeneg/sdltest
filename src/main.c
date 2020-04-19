@@ -14,7 +14,7 @@
 #include "./component/line.h"
 #include "./component/triangle.h"
 #include "./component/rectangle.h"
-
+#include "./component/circle.h"
 #include "./shape/shape.h"
 
 
@@ -32,13 +32,16 @@ int main(void) {
 
 	Rectangle * rect = CreateRectangle(CreateVector(400, 600), CreateVector(550, 550), YELLOW, false);
 
+	Circle * circ = CreateCircle(CreateVector(700, 700), 20, GREEN, false);
+
 	AddShapeToArray(shapes, line1, LINE);
 	AddShapeToArray(shapes, line2, LINE);
 	AddShapeToArray(shapes, line3, LINE);
 	AddShapeToArray(shapes, tri0, TRIANGLE);
 	AddShapeToArray(shapes, rect, RECTANGLE);
+	AddShapeToArray(shapes, circ, CIRCLE);
 
-	//RemoveShapeFromArray(shapes, line2, LINE);
+	RemoveShapeFromArray(shapes, line2, LINE);
 	//RemoveShapeFromArray(shapes, tri0, TRIANGLE);
 	//RemoveShapeFromArray(shapes, rect, RECTANGLE);
 

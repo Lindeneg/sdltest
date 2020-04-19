@@ -7,8 +7,10 @@
 #include "../util/util.h"
 #include "../util/constants.h"
 #include "../component/vector.h"
+#include "../component/line.h"
 #include "../component/triangle.h"
 #include "../component/rectangle.h"
+#include "../component/circle.h"
 
 
 void FreeMem(void *ptr) {
@@ -41,7 +43,9 @@ void FreeShapeArray(ShapeArray *shapes) {
 		if (shapes->rectangleArray) {
 			FreeArray(shapes->rectangleArray->rectangles, shapes->rectangleArray->size, RECTANGLE);
 		}
-		// TODO SHAPE
+		if (shapes->circleArray) {
+			FreeArray(shapes->circleArray->circles, shapes->circleArray->size, CIRCLE);
+		}
 		FreeMem(shapes);
 	}
 }
@@ -71,7 +75,14 @@ void FreeArray(void **ptr, size_t size, const unsigned int type) {
 			}
 		}
 	}
-	// TODO SHAPE
+	if (type == CIRCLE) {
+		Circle **circles = (Circle**)ptr;
+		for (size_t i = 0; i < size; i++) {
+			if (circles[i]) {
+				FreeComponent(circles[i], CIRCLE);
+			}
+		}
+	}
 }
 
 void FreeComponent(void *ptr, const unsigned int type) {
@@ -94,7 +105,11 @@ void FreeComponent(void *ptr, const unsigned int type) {
 		FreeMem(rectangle->bottomRight);
 		FreeMem(rectangle);
 	}
-	// TODO SHAPE
+	if (type == CIRCLE) {
+		Circle *circle = (Circle*)ptr;
+		FreeMem(circle->center);
+		FreeMem(circle);
+	}
 }
 
 void *AllocMem(size_t size) {
@@ -133,7 +148,10 @@ void OutputComponent(void *ptr, const unsigned int type) {
             rectangle->bottomRight->x, rectangle->bottomRight->y
         );
     }
-	// TODO
+	if (type == CIRCLE) {
+		Circle *circle = (Circle*)ptr;
+		printf("\ncenter(%f, %f) | radius: %f", circle->center->x, circle->center->y, circle->radius);
+	}
 }
 
 size_t GetShapeIndex(ShapeArray *shapes, void *shape, const unsigned int type) {
@@ -168,7 +186,16 @@ size_t GetShapeIndex(ShapeArray *shapes, void *shape, const unsigned int type) {
 				}
 			}
 		}
-		// TODO SHAPE
+		if (type == CIRCLE) {
+			if (shapes->circleArray) {
+				Circle *circle = (Circle*)shape;
+				for (size_t i = 0; i < shapes->circleArray->size; i++) {
+					if (AreEqualCircles(shapes->circleArray->circles[i], circle)) {
+						return i;
+					}
+				}
+			}
+		}
 	}
 	return -1;
 }

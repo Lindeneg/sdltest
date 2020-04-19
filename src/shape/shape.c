@@ -114,11 +114,48 @@ static void mAddRectangle(ShapeArray *shapes, void *shape) {
     }
 }
 
+static int mRemoveCircle(ShapeArray *shapes, void *shape) {
+    size_t targetIndex = GetShapeIndex(shapes, shape, CIRCLE);
+    if (targetIndex >= 0) {
+        if (shapes->circleArray->size == 1) {
+            FreeArray(shapes->circleArray->circles, shapes->circleArray->size, CIRCLE);
+            shapes->circleArray->size = 0;
+        } else {
+            FreeComponent(shapes->circleArray->circles[targetIndex], CIRCLE);
+            for (size_t i = targetIndex + 1; i < shapes->circleArray->size; i++) {
+                shapes->circleArray->circles[i-1] = shapes->circleArray->circles[i];
+            }
+            if (shapes->circleArray->size > 1) {
+                ReAllocMem(shapes->circleArray->circles, (shapes->circleArray->size - 1) * sizeof(Circle*));
+            }
+            shapes->circleArray->size--;
+        }
+        return 0;
+    }
+    printf("\nRemoveCircle: could not remove %p with index %d", shape, targetIndex);
+    return -1;
+}
+
+static void mAddCircle(ShapeArray *shapes, void *shape) {
+    Circle *circle = (Circle*)shape;
+    if (!(shapes->circleArray)) {
+        shapes->circleArray = (CircleArray*)AllocMem(sizeof(CircleArray));
+        shapes->circleArray->circles = (Circle**)AllocMem(sizeof(Circle*));
+        shapes->circleArray->circles[0] = circle;
+        shapes->circleArray->size = 1;
+    } else {
+        ReAllocMem(shapes->circleArray->circles, (shapes->circleArray->size + 1) * sizeof(Circle*));
+        shapes->circleArray->size++;
+        shapes->circleArray->circles[(shapes->circleArray->size - 1)] = circle;
+    }
+}
+
 ShapeArray *CreateEmptyShapeArray(void) {
     ShapeArray * shapeArray = (ShapeArray*)AllocMem(sizeof(ShapeArray));
     shapeArray->lineArray = NULL;
     shapeArray->triangleArray = NULL;
     shapeArray->rectangleArray = NULL;
+    shapeArray->circleArray = NULL;
     return shapeArray;
 }
 
@@ -132,6 +169,9 @@ int AddShapeToArray(ShapeArray *shapes, void *shape, const unsigned int type) {
         }
         if (type == RECTANGLE) {
             mAddRectangle(shapes, shape);
+        }
+        if (type == CIRCLE) {
+            mAddCircle(shapes, shape);
         }
         return 0;
     }
@@ -149,6 +189,9 @@ int RemoveShapeFromArray(ShapeArray *shapes, void *shape, const unsigned int typ
         }
         if ((type == RECTANGLE) && (shapes->rectangleArray) && (shapes->rectangleArray->size > 0)) {
             return mRemoveRectangle(shapes, shape);
+        }
+        if ((type == CIRCLE) && (shapes->circleArray) && (shapes->circleArray->size > 0)) {
+            return mRemoveCircle(shapes, shape);
         }
     }
     printf("\nRemoveShapeFromArrayError: could not remove shape %p as ShapeArray %p returns a falsy value", shape, shapes);

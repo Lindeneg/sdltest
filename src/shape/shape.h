@@ -4,6 +4,7 @@
 #include "../component/line.h"
 #include "../component/triangle.h"
 #include "../component/rectangle.h"
+#include "../component/circle.h"
 
 
 struct s_line_array {
@@ -24,10 +25,17 @@ struct s_rectangle_array {
 };
 typedef struct s_rectangle_array RectangleArray;
 
+struct s_circle_array {
+    Circle **circles;
+    size_t size;
+};
+typedef struct s_circle_array CircleArray;
+
 struct s_shape_array {
     LineArray *lineArray;
     TriangleArray *triangleArray;
     RectangleArray *rectangleArray;
+    CircleArray *circleArray;
 };
 typedef struct s_shape_array ShapeArray;
 

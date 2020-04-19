@@ -1,4 +1,5 @@
 #include <stdbool.h>
+#include <stdlib.h>
 #include <math.h>
 
 #include "../screen/draw.h"
@@ -81,6 +82,8 @@ static void SetPixel(Screen *screen, int x, int y, const unsigned int color) {
 	}
 }
 
+// Using Bresenham's line algorithm
+// https://en.wikipedia.org/wiki/Bresenham%27s_line_algorithm
 static void mDrawLine(Screen *screen, int mx0, int my0, int mx1, int my1, const unsigned int color) {
 	if (screen->frontBuffer->window) {
 		int x0 = roundf(mx0);
@@ -118,6 +121,17 @@ static void mDrawLine(Screen *screen, int mx0, int my0, int mx1, int my1, const 
 			}
 		}
 	}
+}
+
+static mDrawCircle(Screen *screen, int centerX, int centerY, int x, int y, const unsigned int color) {
+	SetPixel(screen, centerX+x, centerY+y, color);
+	SetPixel(screen, centerX-x, centerY+y, color);
+	SetPixel(screen, centerX+x, centerY-y, color);
+	SetPixel(screen, centerX-x, centerY-y, color);
+	SetPixel(screen, centerX+y, centerY+x, color);
+	SetPixel(screen, centerX-y, centerY+x, color);
+	SetPixel(screen, centerX+y, centerY-x, color);
+	SetPixel(screen, centerX-y, centerY-x, color);
 }
 
 void DrawVector(Screen *screen, const Vector *vec, const unsigned int color) {
@@ -169,6 +183,25 @@ void DrawRectangle(Screen *screen, Rectangle *rectangle) {
 	);
 }
 
+// Using Bresenham's circle algorithm
+// https://en.wikipedia.org/wiki/Midpoint_circle_algorithm
+void DrawCircle(Screen *screen, Circle *circle) {
+	int x = 0;
+	int y = circle->radius;
+	int d = 3 - 2 * circle->radius;
+	mDrawCircle(screen, circle->center->x, circle->center->y, x, y, circle->color);
+	while (y >= x) {
+		x++;
+		if (d > 0) {
+			y--;
+			d = d + 4 * (x - y) + 10;
+		} else {
+			d = d + 4 * x + 6;
+		}
+		mDrawCircle(screen, circle->center->x, circle->center->y, x, y, circle->color);
+	}
+}
+
 void DrawShapeArray(Screen *screen, const ShapeArray *shapeArray) {
 	if (screen) {
 		if ((shapeArray->lineArray) && (shapeArray->lineArray->size >= 1)) {
@@ -189,6 +222,13 @@ void DrawShapeArray(Screen *screen, const ShapeArray *shapeArray) {
 			for (size_t i = 0; i < shapeArray->rectangleArray->size; i++) {
 				if (shapeArray->rectangleArray->rectangles[i]) {
 					DrawRectangle(screen, shapeArray->rectangleArray->rectangles[i]);
+				}
+			}
+		}
+		if ((shapeArray->circleArray) && (shapeArray->circleArray->size >= 1)) {
+			for (size_t i = 0; i < shapeArray->circleArray->size; i++) {
+				if (shapeArray->circleArray->circles[i]) {
+					DrawCircle(screen, shapeArray->circleArray->circles[i]);
 				}
 			}
 		}
