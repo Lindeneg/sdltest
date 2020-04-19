@@ -18,12 +18,7 @@ struct s_screen {
 };
 typedef struct s_screen Screen;
 
-Screen * InitScreen(
-	const char *title, 
-	unsigned int width, 
-	unsigned height, 
-	unsigned int scale
-);
+Screen * InitScreen(const char *title, unsigned int width, unsigned height, unsigned int scale);
 void UpdateScreen(Screen *screen);
 
 #endif /* SCREEN_SCREEN_H_ */
