@@ -125,7 +125,6 @@ static void mDrawLine(Screen *screen, int mx0, int my0, int mx1, int my1, const 
 }
 
 static void mDrawCircle(Screen *screen, int centerX, int centerY, int x, int y, const unsigned int color) {
-	// TODO Redo code and limit to max line segments
 	SetPixel(screen, centerX+x, centerY+y, color);
 	SetPixel(screen, centerX-x, centerY+y, color);
 	SetPixel(screen, centerX+x, centerY-y, color);
