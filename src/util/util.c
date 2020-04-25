@@ -39,12 +39,15 @@ void FreeShapeArray(ShapeArray *shapes) {
 		}
 		if (shapes->triangleArray) {
 			FreeArray(shapes->triangleArray->triangles, shapes->triangleArray->size, TRIANGLE);
+			FreeMem(shapes->triangleArray);
 		}
 		if (shapes->rectangleArray) {
 			FreeArray(shapes->rectangleArray->rectangles, shapes->rectangleArray->size, RECTANGLE);
+			FreeMem(shapes->rectangleArray);
 		}
 		if (shapes->circleArray) {
 			FreeArray(shapes->circleArray->circles, shapes->circleArray->size, CIRCLE);
+			FreeMem(shapes->circleArray);
 		}
 		FreeMem(shapes);
 	}
