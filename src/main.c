@@ -19,7 +19,7 @@
 
 
 int main(void) {
-	Screen * screen = InitScreen("Test", 800, 800, 1);
+	Screen * screen = InitScreen("Test", 800, 800);
 
 	ShapeArray * shapes = CreateEmptyShapeArray();
 
@@ -32,7 +32,7 @@ int main(void) {
 
 	Rectangle * rect = CreateRectangle(CreateVector(400, 600), CreateVector(550, 550), YELLOW, true);
 
-	Circle * circ = CreateCircle(CreateVector(700, 700), 20, GREEN, false);
+	Circle * circ = CreateCircle(CreateVector(700, 700), 20, GREEN, true);
 
 	AddShapeToArray(shapes, line1, LINE);
 	AddShapeToArray(shapes, line2, LINE);
@@ -40,10 +40,6 @@ int main(void) {
 	AddShapeToArray(shapes, tri0, TRIANGLE);
 	AddShapeToArray(shapes, rect, RECTANGLE);
 	AddShapeToArray(shapes, circ, CIRCLE);
-
-	RemoveShapeFromArray(shapes, line2, LINE);
-	//RemoveShapeFromArray(shapes, tri0, TRIANGLE);
-	//RemoveShapeFromArray(shapes, rect, RECTANGLE);
 
 
 	int isRunning = 1;
