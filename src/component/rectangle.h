@@ -20,6 +20,7 @@ void MoveRectangleToVector(Rectangle *rectangle, const Vector *vector);
 bool IntersectsRectangle(const Rectangle *rectangle, const Rectangle *otherRect);
 bool ContainsVector(const Rectangle *rectangle, const Vector *vector);
 bool AreEqualRectangles(const Rectangle *rectangle, const Rectangle *otherRect);
+Rectangle * CreateRectangleFromPoints(float x0, float y0, float x1, float y1, const unsigned int color, bool fill);
 Rectangle * CreateRectangle(Vector *topLeft, Vector *bottomRight, const unsigned int color, bool fill);
 
 #endif /* COMPONENT_RECTANGLE_H_ */

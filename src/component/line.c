@@ -59,6 +59,12 @@ bool AreEqualLines(const Line *line, const Line *otherLine) {
     );
 }
 
+Line * CreateLineFromPoints(float x0, float y0, float x1, float y1, const unsigned int color) {
+    Vector *p0 = CreateVector(x0, y0);
+    Vector *p1 = CreateVector(x1, y1);
+    return CreateLine(p0, p1, color);
+}
+
 Line * CreateLine(Vector *p0, Vector *p1, const unsigned int color) {
     Line *line = (Line *)AllocMem(sizeof(Line));
     line->p0 = p0;

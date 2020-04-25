@@ -19,6 +19,7 @@ bool IntersectsCircle(const Circle *circle, const Circle *otherCircle);
 bool CircleContainsVector(const Circle *circle, const Vector* vector);
 bool AreEqualCircles(const Circle *circle, const Circle *otherCircle);
 
+Circle * CreateCircleFromPoints(float x0, float y0, float radius, const unsigned int color, bool fill);
 Circle * CreateCircle(Vector *center, float radius, const unsigned int color, bool fill);
 
 #endif /* COMPONENT_CIRCLE_H_ */

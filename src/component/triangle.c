@@ -38,6 +38,13 @@ bool AreEqualTriangles(const Triangle *triangle, const Triangle *otherTriangle) 
     );
 }
 
+Triangle * CreateTriangleFromPoints(float x0, float y0, float x1, float y1, float x2, float y2, const unsigned int color, bool fill) {
+    Vector *p0 = CreateVector(x0, y0);
+    Vector *p1 = CreateVector(x1, y1);
+    Vector *p2 = CreateVector(x2, y2);
+    return CreateTriangle(p0, p1, p2, color, fill);
+}
+
 Triangle * CreateTriangle(Vector *p0, Vector *p1, Vector *p2, const unsigned int color, bool fill) {
     Triangle *triangle = (Triangle*)AllocMem(sizeof(Triangle));
     triangle->p0 = p0;
