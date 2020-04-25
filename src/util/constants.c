@@ -28,5 +28,3 @@ const unsigned int TRIANGLE = 0x6e67;
 const unsigned int CIRCLE = 0x6363;
 const unsigned int SCREEN = 0x6e6c;
 
-
-

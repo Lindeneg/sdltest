@@ -2,7 +2,13 @@
 #define UTIL_CONSTANTS_H_
 
 #include <stdint.h>
+#include <stddef.h>
 #include <stdbool.h>
+
+#define CIRCLE_LINE_SEGMENTS 30
+#define MAX_POLYGON_CORNERS 30
+#define TRIANGLE_SIZE 3
+#define RECTANGLE_SIZE 2
 
 extern const float EPSILON;
 extern const float PI;
@@ -31,6 +37,7 @@ extern const unsigned int RECTANGLE;
 extern const unsigned int TRIANGLE;
 extern const unsigned int CIRCLE;
 extern const unsigned int SCREEN;
+
 
 #endif /* UTIL_CONSTANTS_H_ */
 
