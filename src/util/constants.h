@@ -1,43 +1,38 @@
 #ifndef UTIL_CONSTANTS_H_
 #define UTIL_CONSTANTS_H_
 
-#include <stdint.h>
-#include <stddef.h>
-#include <stdbool.h>
+#define EPSILON 0.00001
+#define PI 3.14159265359
+#define TWO_PI 2.0 * PI
 
-#define CIRCLE_LINE_SEGMENTS 30
 #define MAX_POLYGON_CORNERS 30
+
 #define TRIANGLE_SIZE 3
 #define RECTANGLE_SIZE 4
+#define CIRCLE_SIZE 6
 
-extern const float EPSILON;
-extern const float PI;
-extern const float TWO_PI;
+#define BLACK 0
+#define LIGHT_BLUE 1
+#define GRAY 2
+#define DARK_BLUE 3
+#define SILVER 4
+#define DARK_GREEN 5
+#define OLIVE 6
+#define TEAL 7
+#define BLUE 8
+#define GREEN 9
+#define PURPLE 10
+#define LIGHT_RED 11
+#define DARK_RED 12
+#define RED 13
+#define YELLOW 14
+#define WHITE 15
 
-extern const unsigned int BLACK;
-extern const unsigned int LIGHT_BLUE;
-extern const unsigned int GRAY;
-extern const unsigned int DARK_BLUE; 
-extern const unsigned int SILVER; 
-extern const unsigned int DARK_GREEN;
-extern const unsigned int OLIVE;
-extern const unsigned int TEAL;
-extern const unsigned int BLUE;
-extern const unsigned int GREEN;
-extern const unsigned int PURPLE;
-extern const unsigned int LIGHT_RED;
-extern const unsigned int DARK_RED;
-extern const unsigned int RED;
-extern const unsigned int YELLOW;
-extern const unsigned int WHITE;
-
-extern const unsigned int VECTOR;
-extern const unsigned int LINE;
-extern const unsigned int RECTANGLE;
-extern const unsigned int TRIANGLE;
-extern const unsigned int CIRCLE;
-extern const unsigned int SCREEN;
+#define VECTOR 0x7665
+#define LINE 0x6c69
+#define TRIANGLE 0x6e67
+#define RECTANGLE 0x726c
+#define CIRCLE 0x6363
 
 
 #endif /* UTIL_CONSTANTS_H_ */
-

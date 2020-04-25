@@ -26,6 +26,3 @@ Color *GetScreenColors(const SDL_PixelFormat *format) {
 	return color;	
 }
 
-
-
-

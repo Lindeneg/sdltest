@@ -161,22 +161,24 @@ ShapeArray *CreateEmptyShapeArray(void) {
 
 int AddShapeToArray(ShapeArray *shapes, void *shape, const unsigned int type) {
     if (shapes) {
-        if (type == LINE) {
-            mAddLine(shapes, shape);
-        }
-        if (type == TRIANGLE) {
-            mAddTriangle(shapes, shape);
-        }
-        if (type == RECTANGLE) {
-            mAddRectangle(shapes, shape);
-        }
-        if (type == CIRCLE) {
-            mAddCircle(shapes, shape);
+        switch(type) {
+            case LINE:
+                mAddLine(shapes, shape);
+                break;
+            case TRIANGLE:
+                mAddTriangle(shapes, shape);
+                break;
+            case RECTANGLE:
+                mAddRectangle(shapes, shape);
+                break;
+            case CIRCLE:
+                mAddCircle(shapes, shape);
+                break;
+            default:
+                return -1;
         }
         return 0;
     }
-    printf("\nAddShapeToArrayError: could not add shape %p as ShapeArray %p returns a falsy value", shape, shapes);
-    return -1;
 }
 
 int RemoveShapeFromArray(ShapeArray *shapes, void *shape, const unsigned int type) {

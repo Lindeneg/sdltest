@@ -1,79 +1,67 @@
 #include <stdbool.h>
 #include <stdlib.h>
+#include <stdio.h>
 #include <math.h>
 
-#include <stdio.h>
-
 #include "../screen/draw.h"
-#include "../util/color.h"
 #include "../util/constants.h"
 #include "../util/util.h"
 
-
+// returns true if the given coords are within the surface dimensions
+// no reason to draw a pixel we can't see anyways
 static bool IsWithinBounds(Screen *screen, int x, int y) {
-	int w = screen->backBuffer->surface->w;
-	int h = screen->backBuffer->surface->h;
-	return ((x < w && x >= 0) && (y < h && y >= 0));
+	return ((x < screen->backBuffer->surface->w && x >= 0) && (y < screen->backBuffer->surface->h && y >= 0));
 }
 
+// returns the index of the pixel target in the SDL_Surface pixels array
 static size_t GetPixelTarget(Screen *screen, int x, int y) {
 	return y * screen->backBuffer->surface->w + x;
 }
 
+// returns a SDL_Color with the appropriate pixelformat for the given enviroment
 static uint32_t GetSDLColor(Screen *screen, const unsigned int color) {
 	if ((screen->color) && (screen->pixelFormat)) {
-		if (color == BLACK) {
-			return screen->color->black;
-		}
-		if (color == LIGHT_BLUE) {
-			return screen->color->lightBlue;
-		}
-		if (color == GRAY) {
-			return screen->color->gray;
-		}
-		if (color == DARK_BLUE) {
-			return screen->color->darkBlue;
-		}
-		if (color == SILVER) {
-			return screen->color->silver;
-		}
-		if (color == DARK_GREEN) {
-			return screen->color->darkGreen;
-		}
-		if (color == OLIVE) {
-			return screen->color->olive;
-		}
-		if (color == TEAL) {
-			return screen->color->teal;
-		}
-		if (color == BLUE) {
-			return screen->color->blue;
-		}
-		if (color == GREEN) {
-			return screen->color->green;
-		}
-		if (color == PURPLE) {
-			return screen->color->purple;
-		}
-		if (color == LIGHT_RED) {
-			return screen->color->lightRed;
-		}
-		if (color == DARK_RED) {
-			return screen->color->darkRed;
-		}
-		if (color == RED) {
-			return screen->color->red;
-		}
-		if (color == YELLOW) {
-			return screen->color->yellow;
-		}
-		if (color == WHITE) {
-			return screen->color->white;
+		switch (color) {
+			case BLACK:
+				return screen->color->black;
+			case LIGHT_BLUE:
+				return screen->color->lightBlue;
+			case GRAY:
+				return screen->color->gray;
+			case DARK_BLUE:
+				return screen->color->darkBlue;
+			case SILVER:
+				return screen->color->silver;
+			case DARK_GREEN:
+				return screen->color->darkGreen;
+			case OLIVE:
+				return screen->color->olive;
+			case TEAL:
+				return screen->color->teal;
+			case BLUE:
+				return screen->color->blue;
+			case GREEN:
+				return screen->color->green;
+			case PURPLE:
+				return screen->color->purple;
+			case LIGHT_RED:
+				return screen->color->lightRed;
+			case DARK_RED:
+				return screen->color->darkRed;
+			case RED:
+				return screen->color->red;
+			case YELLOW:
+				return screen->color->yellow;
+			case WHITE:
+				return screen->color->white;
+			default:
+				break;
 		}
 	}
 	return 0;
 }
 
+// sets a single pixel to a color in the screen's SDL_Surface pixelarray
 static void SetPixel(Screen *screen, int x, int y, const unsigned int color) {
 	if ((screen->backBuffer->surface) && (IsWithinBounds(screen, x, y))) {
 		SDL_LockSurface(screen->backBuffer->surface);
@@ -84,24 +72,34 @@ static void SetPixel(Screen *screen, int x, int y, const unsigned int color) {
 	}
 }
 
-// Using Bresenham's line algorithm
 // https://en.wikipedia.org/wiki/Bresenham%27s_line_algorithm
 static void mDrawLine(Screen *screen, int mx0, int my0, int mx1, int my1, const unsigned int color) {
 	if (screen->frontBuffer->window) {
+		// initial vector points
 		int x0 = roundf(mx0);
 		int y0 = roundf(my0);
 		int x1 = roundf(mx1);
 		int y1 = roundf(my1);
+		/*
+		abstracted equation for the line through initial vector points
+		((y - y0) / (y1 - y0)) = ((x - x0)  / (x1 - x0))
+		y                      = ((y1 - y0) / (x1 - x0)) * (x - x0) + y0
+		*/
 		int deltaX = x1 - x0;
 		int deltaY = y1 - y0;
+		// evaluates to 1 or -1
 		signed const int incrementX = ((deltaX > 0) - (deltaX < 0));
 		signed const int incrementY = ((deltaY > 0) - (deltaY < 0));
+		// f(x0 + 1, y0 * 0.5)
 		deltaX = abs(deltaX) * 2;
 		deltaY = abs(deltaY) * 2;
 		SetPixel(screen, x0, y0, color);
+		// decision finds the ideal candidate between
+		// (x0 + 1, y0) and (x0 + 1, y0 + 1)
 		if (deltaX >= deltaY) {
 			int decision = deltaY - (deltaX / 2);
 			while (x0 != x1) {
+				// move along x-axis
 				if (decision >= 0) {
 					decision -= deltaX;
 					y0 += incrementY;
@@ -113,6 +111,7 @@ static void mDrawLine(Screen *screen, int mx0, int my0, int mx1, int my1, const 
 		} else {
 			int decision = deltaX - (deltaY / 2);
 			while (y0 != y1) {
+				// move along y-axis
 				if (decision >= 0) {
 					decision -= deltaY;
 					x0 += incrementX;
@@ -126,6 +125,7 @@ static void mDrawLine(Screen *screen, int mx0, int my0, int mx1, int my1, const 
 }
 
 static void mDrawCircle(Screen *screen, int centerX, int centerY, int x, int y, const unsigned int color) {
+	// TODO Redo code and limit to max line segments
 	SetPixel(screen, centerX+x, centerY+y, color);
 	SetPixel(screen, centerX-x, centerY+y, color);
 	SetPixel(screen, centerX+x, centerY-y, color);
@@ -223,6 +223,7 @@ void DrawTriangle(Screen *screen, Triangle *triangle) {
 }
 
 void DrawRectangle(Screen *screen, Rectangle *rectangle) {
+	// top-left -> top-right
 	mDrawLine(
 		screen, 
 		rectangle->topLeft->x, 
@@ -231,6 +232,7 @@ void DrawRectangle(Screen *screen, Rectangle *rectangle) {
 		rectangle->topLeft->y, 
 		rectangle->color
 	);
+	// bottom-right -> bottom-left
 	mDrawLine(
 		screen, 
 		rectangle->bottomRight->x, 
@@ -239,6 +241,7 @@ void DrawRectangle(Screen *screen, Rectangle *rectangle) {
 		rectangle->bottomRight->y, 
 		rectangle->color
 	);
+	// top-left -> bottom-left
 	mDrawLine(
 		screen, 
 		rectangle->topLeft->x, 
@@ -247,6 +250,7 @@ void DrawRectangle(Screen *screen, Rectangle *rectangle) {
 		rectangle->bottomRight->y, 
 		rectangle->color
 	);
+	// top-right -> bottom-right
 	mDrawLine(
 		screen, 
 		rectangle->bottomRight->x, 
@@ -256,13 +260,13 @@ void DrawRectangle(Screen *screen, Rectangle *rectangle) {
 		rectangle->color
 	);
 	if (rectangle->fill) {
+		//                                 top-left               top-right                  bottom-right               bottom-left
 		const float xv[RECTANGLE_SIZE] = { rectangle->topLeft->x, rectangle->bottomRight->x, rectangle->bottomRight->x, rectangle->topLeft->x };
-		const float yv[RECTANGLE_SIZE] = { rectangle->topLeft->y, rectangle->topLeft->y, rectangle->bottomRight->y, rectangle->bottomRight->y };
+		const float yv[RECTANGLE_SIZE] = { rectangle->topLeft->y, rectangle->topLeft->y,     rectangle->bottomRight->y, rectangle->bottomRight->y };
 		mFillPoly(screen, xv, yv, RECTANGLE_SIZE, rectangle->color);
 	}
 }
 
-// Using Bresenham's circle algorithm
 // https://en.wikipedia.org/wiki/Midpoint_circle_algorithm
 void DrawCircle(Screen *screen, Circle *circle) {
 	int x = 0;
@@ -280,12 +284,19 @@ void DrawCircle(Screen *screen, Circle *circle) {
 		mDrawCircle(screen, circle->center->x, circle->center->y, x, y, circle->color);
 	}
 	if (circle->fill) {
-		// todo
+		for (int y = -circle->radius; y <= circle->radius; y++) {
+			for (int x = -circle->radius; x <= circle->radius; x++) {
+				if (((x * x) + (y * y)) <= (circle->radius * circle->radius)) {
+					SetPixel(screen, (circle->center->x+x), (circle->center->y+y), circle->color);
+				}
+			}
+		}
 	}
 }
 
+// draws each shape contained inside a given shapearray
 void DrawShapeArray(Screen *screen, const ShapeArray *shapeArray) {
-	if (screen) {
+	if (screen && shapeArray) {
 		if ((shapeArray->lineArray) && (shapeArray->lineArray->size >= 1)) {
 			for (size_t i = 0; i < shapeArray->lineArray->size; i++) {
 				if (shapeArray->lineArray->lines[i]) {
