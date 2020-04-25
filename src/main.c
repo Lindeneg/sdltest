@@ -28,7 +28,7 @@ int main(void) {
 	Line * line2 = CreateLine(CreateVector(0, 800), CreateVector(800, 0), BLUE);
 	Line * line3 = CreateLine(CreateVector(440, 440), CreateVector(740, 0), LIGHT_BLUE);
 
-	Triangle * tri0 = CreateTriangle(CreateVector(0, 0), CreateVector(0, 400), CreateVector(400, 400), PURPLE, false);
+	Triangle * tri0 = CreateTriangle(CreateVector(0, 0), CreateVector(0, 400), CreateVector(400, 400), PURPLE, true);
 
 	Rectangle * rect = CreateRectangle(CreateVector(400, 600), CreateVector(550, 550), YELLOW, false);
 
