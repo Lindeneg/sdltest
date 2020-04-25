@@ -26,7 +26,8 @@ static void ClearBackBuffer(Screen *screen) {
 	}	
 }
 
-Screen *InitScreen(const char *title, unsigned int width, unsigned int height, unsigned int scale) {
+Screen *InitScreen(const char *title, unsigned int width, unsigned int height) {
+	unsigned int scale = 1;
 	BackBuffer * backBuffer = (BackBuffer*)AllocMem(sizeof(BackBuffer));
 	FrontBuffer * frontBuffer = (FrontBuffer*)AllocMem(sizeof(FrontBuffer));
 	Screen * screen = (Screen*)AllocMem(sizeof(Screen));
