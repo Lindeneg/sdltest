@@ -8,7 +8,7 @@
 #define CIRCLE_LINE_SEGMENTS 30
 #define MAX_POLYGON_CORNERS 30
 #define TRIANGLE_SIZE 3
-#define RECTANGLE_SIZE 2
+#define RECTANGLE_SIZE 4
 
 extern const float EPSILON;
 extern const float PI;

@@ -30,7 +30,7 @@ int main(void) {
 
 	Triangle * tri0 = CreateTriangle(CreateVector(0, 0), CreateVector(0, 400), CreateVector(400, 400), PURPLE, true);
 
-	Rectangle * rect = CreateRectangle(CreateVector(400, 600), CreateVector(550, 550), YELLOW, false);
+	Rectangle * rect = CreateRectangle(CreateVector(400, 600), CreateVector(550, 550), YELLOW, true);
 
 	Circle * circ = CreateCircle(CreateVector(700, 700), 20, GREEN, false);
 

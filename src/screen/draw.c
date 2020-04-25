@@ -179,12 +179,8 @@ static int mFillPoly(Screen *screen, const float xv[], const float yv[], const s
 				tempSortStore = xNodes[i];
 				xNodes[i] = xNodes[i + 1];
 				xNodes[i + 1] = tempSortStore;
-				if (i) {
-					i--;
-				} else {
-					i++;
-				}
 			}
+			i++;
 		}
 		// fill the shape with the appropriate color by drawing the pixels found inside the shape 
 		for (i = 0; i < nodes; i+=2) {
@@ -259,11 +255,11 @@ void DrawRectangle(Screen *screen, Rectangle *rectangle) {
 		rectangle->bottomRight->y, 
 		rectangle->color
 	);
-	// if (rectangle->fill) {
-	// 	const float xv[RECTANGLE_SIZE] = { rectangle->topLeft->x, rectangle->bottomRight->x };
-	// 	const float yv[RECTANGLE_SIZE] = { rectangle->topLeft->y, rectangle->bottomRight->y };
-	// 	mFillPoly(screen, xv, yv, RECTANGLE_SIZE, rectangle->color);
-	// }
+	if (rectangle->fill) {
+		const float xv[RECTANGLE_SIZE] = { rectangle->topLeft->x, rectangle->bottomRight->x, rectangle->bottomRight->x, rectangle->topLeft->x };
+		const float yv[RECTANGLE_SIZE] = { rectangle->topLeft->y, rectangle->topLeft->y, rectangle->bottomRight->y, rectangle->bottomRight->y };
+		mFillPoly(screen, xv, yv, RECTANGLE_SIZE, rectangle->color);
+	}
 }
 
 // Using Bresenham's circle algorithm
