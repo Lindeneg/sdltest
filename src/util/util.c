@@ -132,6 +132,7 @@ void *AllocMem(size_t size) {
 void ReAllocMem(void *ptr, size_t newSize) {
 	if (realloc(ptr, newSize) == NULL) {
 		printf("\nReAllocMemError: Reallocations of %d bytes from pointer %p returned NULL", newSize, ptr);
+		exit(-1);
 	}
 }
 
