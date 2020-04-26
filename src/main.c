@@ -44,9 +44,7 @@ int main(void) {
 
 	int isRunning = 1;
 	SDL_Event sdlEvent;
-
 	while (isRunning) {
-
 		while(SDL_PollEvent(&sdlEvent)) {
 			switch(sdlEvent.type) {
 				case SDL_QUIT:
@@ -57,7 +55,6 @@ int main(void) {
 		RotateLine(shapes->lineArray->lines[0], 0.20);
 		DrawShapeArray(screen, shapes);
 		UpdateScreen(screen);
-
 	}
 	FreeShapeArray(shapes);
 	FreeScreen(screen);
