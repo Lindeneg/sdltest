@@ -24,15 +24,15 @@ int main(void) {
 	ShapeArray * shapes = CreateEmptyShapeArray();
 
 
-	Line * line1 = CreateLineFromPoints(250, 250, 440, 440, 0, 0, NO_COLLISION, RED);
-	Line * line2 = CreateLineFromPoints(0, 800, 800, 0, 0, 0, NO_COLLISION, BLUE);
-	Line * line3 = CreateLineFromPoints(440, 440, 740, 0, 0, 0, NO_COLLISION, LIGHT_BLUE);
+	Line * line1 = CreateLineFromPoints(250, 250, 440, 440, 0, 0, NEUTRAL_COLLISION_LAYER, RED);
+	Line * line2 = CreateLineFromPoints(0, 800, 800, 0, 0, 0, NEUTRAL_COLLISION_LAYER, BLUE);
+	Line * line3 = CreateLineFromPoints(440, 440, 740, 0, 0, 0, NEUTRAL_COLLISION_LAYER, LIGHT_BLUE);
 
-	Triangle * tri0 = CreateTriangleFromPoints(0, 0, 0, 400, 400, 400, 0, 0, NO_COLLISION, PURPLE, true);
+	Triangle * tri0 = CreateTriangleFromPoints(0, 0, 0, 400, 400, 400, 0, 0, NEUTRAL_COLLISION_LAYER, PURPLE, true);
 
-	Rectangle * rect = CreateRectangleFromPoints(400, 600, 550, 550, 0, 0, NO_COLLISION, YELLOW, true);
+	Rectangle * rect = CreateRectangleFromPoints(400, 600, 550, 550, 0, 0, NEUTRAL_COLLISION_LAYER, YELLOW, true);
 
-	Circle * circ = CreateCircleFromPoints(700, 700, 20, 0, 0, NO_COLLISION, GREEN, true);
+	Circle * circ = CreateCircleFromPoints(700, 700, 20, 0, 0, NEUTRAL_COLLISION_LAYER, GREEN, true);
 
 	AddShapeToArray(shapes, line1, LINE);
 	AddShapeToArray(shapes, line2, LINE);
