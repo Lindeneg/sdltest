@@ -4,7 +4,7 @@
 #include "../util/color.h"
 #include "../util/util.h"
 
-
+// Mapping of SDL_Colors with the appropriate pixelformat
 Color *GetScreenColors(const SDL_PixelFormat *format) {
 	Color * color = (Color*)AllocMem(sizeof(Color));
 	color->black = SDL_MapRGBA(format, 0, 0, 0, 255);

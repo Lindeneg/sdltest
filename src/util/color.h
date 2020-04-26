@@ -22,7 +22,6 @@ struct s_color {
 	uint32_t yellow;
 	uint32_t white;
 };
-
 typedef struct s_color Color;
 
 Color *GetScreenColors(const SDL_PixelFormat *format);
