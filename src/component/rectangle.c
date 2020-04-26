@@ -45,17 +45,31 @@ bool AreEqualRectangles(const Rectangle *rectangle, const Rectangle *otherRect) 
     );
 }
 
-Rectangle * CreateRectangleFromPoints(float x0, float y0, float x1, float y1, const unsigned int color, bool fill) {
-    Vector *topLeft = CreateVector(x0, y0);
-    Vector *bottomRight = CreateVector(x1, y1);
-    return CreateRectangle(topLeft, bottomRight, color, fill);
+Rectangle * CreateRectangleFromPoints(
+    float x0, float y0, 
+    float x1, float y1,
+    int xv, int yv,
+    int collisionLayer,
+    const unsigned int color, 
+    bool fill) 
+    {
+        Vector *topLeft = CreateVector(x0, y0);
+        Vector *bottomRight = CreateVector(x1, y1);
+        return CreateRectangle(topLeft, bottomRight, xv, yv, collisionLayer, color, fill);
 }
 
-Rectangle * CreateRectangle(Vector *topLeft, Vector *bottomRight, const unsigned int color, bool fill) {
-    Rectangle *rectangle = (Rectangle*)AllocMem(sizeof(Rectangle));
-    rectangle->topLeft = topLeft;
-    rectangle->bottomRight = bottomRight;
-    rectangle->color = color;
-    rectangle->fill = fill;
-    return rectangle;
+Rectangle * CreateRectangle(
+    Vector *topLeft, Vector *bottomRight,
+    int xv, int yv, int collisionLayer,
+    const unsigned int color, 
+    bool fill) 
+    {
+        ShapeRules *rules = CreateNewShapeRule(xv, yv, collisionLayer);
+        Rectangle *rectangle = (Rectangle*)AllocMem(sizeof(Rectangle));
+        rectangle->topLeft = topLeft;
+        rectangle->bottomRight = bottomRight;
+        rectangle->rules = rules;
+        rectangle->color = color;
+        rectangle->fill = fill;
+        return rectangle;
 }

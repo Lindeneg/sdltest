@@ -14,12 +14,14 @@ float GetTriangleArea(const Triangle *triangle) {
         / 2.0f));
 }
 
+// https://mathworld.wolfram.com/BarycentricCoordinates.html
 bool TriangleContainsVector(const Triangle *triangle, const Vector *vector) {
     bool result;
-    Triangle *t1 = CreateTriangle(vector, triangle->p1, triangle->p2, BLACK, false);
-    Triangle *t2 = CreateTriangle(triangle->p0, vector, triangle->p2, BLACK, false);
-    Triangle *t3 = CreateTriangle(triangle->p0, triangle->p1, vector, BLACK, false);
+    Triangle *t1 = CreateTriangle(vector, triangle->p1, triangle->p2, 0, 0, NO_COLLISION, BLACK, false);
+    Triangle *t2 = CreateTriangle(triangle->p0, vector, triangle->p2, 0, 0, NO_COLLISION, BLACK, false);
+    Triangle *t3 = CreateTriangle(triangle->p0, triangle->p1, vector, 0, 0, NO_COLLISION, BLACK, false);
     float area = GetTriangleArea(triangle);
+    // the areas of the triangles are proportional to the barycentric coordinates 
     float area1 = GetTriangleArea(t1);
     float area2 = GetTriangleArea(t2);
     float area3 = GetTriangleArea(t3);
@@ -38,19 +40,38 @@ bool AreEqualTriangles(const Triangle *triangle, const Triangle *otherTriangle) 
     );
 }
 
-Triangle * CreateTriangleFromPoints(float x0, float y0, float x1, float y1, float x2, float y2, const unsigned int color, bool fill) {
-    Vector *p0 = CreateVector(x0, y0);
-    Vector *p1 = CreateVector(x1, y1);
-    Vector *p2 = CreateVector(x2, y2);
-    return CreateTriangle(p0, p1, p2, color, fill);
+Triangle * CreateTriangleFromPoints(
+    float x0, float y0,
+    float x1, float y1,
+    float x2, float y2,
+    int xv, int yv,
+    int collisionLayer,
+    const unsigned int color,
+    bool fill) 
+    {
+        Vector *p0 = CreateVector(x0, y0);
+        Vector *p1 = CreateVector(x1, y1);
+        Vector *p2 = CreateVector(x2, y2);
+        return CreateTriangle(p0, p1, p2, xv, yv, collisionLayer, color, fill);
 }
 
-Triangle * CreateTriangle(Vector *p0, Vector *p1, Vector *p2, const unsigned int color, bool fill) {
-    Triangle *triangle = (Triangle*)AllocMem(sizeof(Triangle));
-    triangle->p0 = p0;
-    triangle->p1 = p1;
-    triangle->p2 = p2;
-    triangle->color = color;
-    triangle->fill = fill;
-    return triangle;
+Triangle * CreateTriangle(
+    Vector *p0,
+    Vector *p1,
+    Vector *p2,
+    int xv,
+    int yv,
+    int collisionLayer,
+    const unsigned int color,
+    bool fill) 
+    {
+        ShapeRules *rules = CreateNewShapeRule(xv, yv, collisionLayer);
+        Triangle *triangle = (Triangle*)AllocMem(sizeof(Triangle));
+        triangle->p0 = p0;
+        triangle->p1 = p1;
+        triangle->p2 = p2;
+        triangle->rules = rules;
+        triangle->color = color;
+        triangle->fill = fill;
+        return triangle;
 }

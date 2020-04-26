@@ -3,6 +3,7 @@
 #include "../component/line.h"
 #include "../util/util.h"
 
+// https://en.wikipedia.org/wiki/Slope
 float GetLineSlope(const Line *line) {
     float deltaX = line->p1->x - line->p0->x;
     if (fabsf(deltaX) < EPSILON) {
@@ -16,6 +17,7 @@ float GetLineLength(const Line *line) {
     return GetVectorDistance(line->p1, line->p0);
 }
 
+// https://en.wikipedia.org/wiki/Distance_from_a_point_to_a_line
 float GetLineMinDistanceFrom(const Line *line, const Vector *point) {
     Vector *closetVec = CreateVector(0, 0);
     GetLineClosetPoint(closetVec, line, point);
@@ -24,6 +26,7 @@ float GetLineMinDistanceFrom(const Line *line, const Vector *point) {
     return distance;
 }
 
+// https://en.wikipedia.org/wiki/Line%E2%80%93line_intersection
 void GetLineClosetPoint(Vector *resultVec, const Line *line, const Vector *point) {
     Vector *p0P = CreateVector(0, 0);
     Vector *p0P1 = CreateVector(0, 0);
@@ -59,16 +62,29 @@ bool AreEqualLines(const Line *line, const Line *otherLine) {
     );
 }
 
-Line * CreateLineFromPoints(float x0, float y0, float x1, float y1, const unsigned int color) {
-    Vector *p0 = CreateVector(x0, y0);
-    Vector *p1 = CreateVector(x1, y1);
-    return CreateLine(p0, p1, color);
+Line * CreateLineFromPoints(
+    float x0, float y0, 
+    float x1, float y1, 
+    int xv, int yv, 
+    int collisionLayer, 
+    const unsigned int color) 
+    {
+        Vector *p0 = CreateVector(x0, y0);
+        Vector *p1 = CreateVector(x1, y1);
+        return CreateLine(p0, p1, xv, yv, collisionLayer, color);
 }
 
-Line * CreateLine(Vector *p0, Vector *p1, const unsigned int color) {
-    Line *line = (Line *)AllocMem(sizeof(Line));
-    line->p0 = p0;
-    line->p1 = p1;
-    line->color = color;
-    return line;
+Line * CreateLine(
+    Vector *p0, Vector *p1, 
+    int xv, int yv, 
+    int collisionLayer, 
+    const unsigned int color) 
+    {
+        ShapeRules *rules = CreateNewShapeRule(xv, yv, collisionLayer);
+        Line *line = (Line *)AllocMem(sizeof(Line));
+        line->p0 = p0;
+        line->p1 = p1;
+        line->rules = rules;
+        line->color = color;
+        return line;
 }
