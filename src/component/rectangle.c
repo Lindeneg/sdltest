@@ -48,7 +48,7 @@ bool AreEqualRectangles(const Rectangle *rectangle, const Rectangle *otherRect) 
 Rectangle * CreateRectangleFromPoints(
     float x0, float y0, 
     float x1, float y1,
-    int xv, int yv,
+    float xv, float yv,
     int collisionLayer,
     const unsigned int color, 
     bool fill) 
@@ -60,7 +60,7 @@ Rectangle * CreateRectangleFromPoints(
 
 Rectangle * CreateRectangle(
     Vector *topLeft, Vector *bottomRight,
-    int xv, int yv, int collisionLayer,
+    float xv, float yv, int collisionLayer,
     const unsigned int color, 
     bool fill) 
     {

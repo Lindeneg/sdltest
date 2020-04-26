@@ -21,7 +21,7 @@ bool AreEqualCircles(const Circle *circle, const Circle *otherCircle) {
 
 Circle * CreateCircleFromPoints(
     float x0, float y0, float radius,
-    int xv, int yv, int collisionLayer, 
+    float xv, float yv, int collisionLayer, 
     const unsigned int color, bool fill) 
     {
         Vector *center = CreateVector(x0, y0);
@@ -30,7 +30,7 @@ Circle * CreateCircleFromPoints(
 
 Circle * CreateCircle(
     Vector *center, float radius,
-    int xv, int yv, int collisionLayer,
+    float xv, float yv, int collisionLayer,
     const unsigned int color, bool fill) 
     {
         ShapeRules *rules = CreateNewShapeRule(xv, yv, collisionLayer);

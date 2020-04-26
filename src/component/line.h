@@ -4,7 +4,7 @@
 #include <stdbool.h>
 
 #include "../component/vector.h"
-#include "../shape/rule.h"
+#include "../component/rule.h"
 
 /*
 A simple line representation. The two vectors represent the start and end, respectively.
@@ -43,8 +43,8 @@ bool AreEqualLines(const Line *line, const Line *otherLine);
 Line * CreateLineFromPoints(
     float x0, float y0,      // start point
     float x1, float y1,      // end   point
-    int xv,                  // x-velocity
-    int yv,                  // y-velocity
+    float xv,                // x-velocity
+    float yv,                // y-velocity
     int collisionLayer,      // collisionType
     const unsigned int color // line color
 );
@@ -53,8 +53,8 @@ Line * CreateLineFromPoints(
 Line * CreateLine(
     Vector *p0,              // start vector
     Vector *p1,              // end   vector
-    int xv,                  // x-velocity
-    int yv,                  // y-velocity
+    float xv,                // x-velocity
+    float yv,                // y-velocity
     int collisionLayer,      // collisionType
     const unsigned int color // line color
 );

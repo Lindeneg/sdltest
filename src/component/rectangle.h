@@ -4,7 +4,7 @@
 #include <stdbool.h>
 
 #include "../component/vector.h"
-#include "../shape/rule.h"
+#include "../component/rule.h"
 
 // Rectangle representation. Constructed from two vectors or four floating coordinates
 struct s_rectangle {
@@ -41,8 +41,8 @@ bool AreEqualRectangles(const Rectangle *rectangle, const Rectangle *otherRect);
 Rectangle * CreateRectangleFromPoints(
     float x0, float y0,       // top-left     point
     float x1, float y1,       // bottom-right point
-    int xv,                   // x-velocity
-    int yv,                   // y-velocity
+    float xv,                 // x-velocity
+    float yv,                 // y-velocity
     int collisionLayer,       // collisionType
     const unsigned int color, // rectangle color
     bool fill                 // fill rectangle area with color
@@ -52,8 +52,8 @@ Rectangle * CreateRectangleFromPoints(
 Rectangle * CreateRectangle(
     Vector *topLeft,          // top-left     vector
     Vector *bottomRight,      // bottom-right vector
-    int xv,                   // x-velocity
-    int yv,                   // y-velocity
+    float xv,                 // x-velocity
+    float yv,                 // y-velocity
     int collisionLayer,       // collisionType
     const unsigned int color, // rectangle color
     bool fill                 // fill rectangle area with color

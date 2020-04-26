@@ -44,7 +44,7 @@ Triangle * CreateTriangleFromPoints(
     float x0, float y0,
     float x1, float y1,
     float x2, float y2,
-    int xv, int yv,
+    float xv, float yv,
     int collisionLayer,
     const unsigned int color,
     bool fill) 
@@ -56,14 +56,9 @@ Triangle * CreateTriangleFromPoints(
 }
 
 Triangle * CreateTriangle(
-    Vector *p0,
-    Vector *p1,
-    Vector *p2,
-    int xv,
-    int yv,
-    int collisionLayer,
-    const unsigned int color,
-    bool fill) 
+    Vector *p0, Vector *p1, Vector *p2,
+    float xv, float yv, int collisionLayer,
+    const unsigned int color, bool fill) 
     {
         ShapeRules *rules = CreateNewShapeRule(xv, yv, collisionLayer);
         Triangle *triangle = (Triangle*)AllocMem(sizeof(Triangle));

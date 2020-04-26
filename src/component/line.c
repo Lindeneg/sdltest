@@ -65,7 +65,7 @@ bool AreEqualLines(const Line *line, const Line *otherLine) {
 Line * CreateLineFromPoints(
     float x0, float y0, 
     float x1, float y1, 
-    int xv, int yv, 
+    float xv, float yv, 
     int collisionLayer, 
     const unsigned int color) 
     {
@@ -76,7 +76,7 @@ Line * CreateLineFromPoints(
 
 Line * CreateLine(
     Vector *p0, Vector *p1, 
-    int xv, int yv, 
+    float xv, float yv, 
     int collisionLayer, 
     const unsigned int color) 
     {

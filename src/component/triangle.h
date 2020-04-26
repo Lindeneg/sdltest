@@ -2,9 +2,8 @@
 #define COMPONENT_TRIANGLE_H_
 
 #include <stdbool.h>
-
+#include "../component/rule.h"
 #include "../component/vector.h"
-#include "../shape/rule.h"
 
 // A simple triangle representation. Constructed from three vectors or six floats.
 struct s_triangle {
@@ -34,8 +33,8 @@ Triangle * CreateTriangleFromPoints(
     float x0, float y0,       // point one
     float x1, float y1,       // point two
     float x2, float y2,       // point three
-    int xv,                   // x-velocity
-    int yv,                   // y-velocity
+    float xv,                 // x-velocity
+    float yv,                 // y-velocity
     int collisionLayer,       // collisionType
     const unsigned int color, // triangle color
     bool fill                 // fill triangle area with color
@@ -46,8 +45,8 @@ Triangle * CreateTriangle(
     Vector *p0,               // vector one
     Vector *p1,               // vector two
     Vector *p2,               // vector three
-    int xv,                   // x-velocity
-    int yv,                   // y-velocity
+    float xv,                 // x-velocity
+    float yv,                 // y-velocity
     int collisionLayer,       // collisionType
     const unsigned int color, // triangle color
     bool fill                 // fill triangle area with color

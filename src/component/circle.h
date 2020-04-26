@@ -2,9 +2,8 @@
 #define COMPONENT_CIRCLE_H_
 
 #include <stdbool.h>
-
+#include "../component/rule.h"
 #include "../component/vector.h"
-#include "../shape/rule.h"
 
 // Cirlce representation. Constructed by a single vector and a radius or two floating numbers and a radius.
 struct s_circle {
@@ -32,8 +31,8 @@ bool AreEqualCircles(const Circle *circle, const Circle *otherCircle);
 Circle * CreateCircleFromPoints(
     float x0, float y0,       // center point
     float radius,             // circle radius
-    int xv,                   // x-velocity
-    int yv,                   // y-velocity
+    float xv,                 // x-velocity
+    float yv,                 // y-velocity
     int collisionLayer,       // collisionType
     const unsigned int color, // circle color
     bool fill                 // fill circle area with color
@@ -43,8 +42,8 @@ Circle * CreateCircleFromPoints(
 Circle * CreateCircle(
     Vector *center,           // center vector
     float radius,             // circle radius
-    int xv,                   // x-velocity
-    int yv,                   // y-velocity
+    float xv,                 // x-velocity
+    float yv,                 // y-velocity
     int collisionLayer,       // collisionType
     const unsigned int color, // circle color
     bool fill                 // fill circle area with color
