@@ -6,6 +6,83 @@
 #include "../util/util.h"
 
 
+static int HandleShapeMovement(void *shape, const unsigned int type) {
+    if (shape) {
+        bool didSomething = false;
+        if (type == LINE) {
+            Line *line = (Line*)shape;
+            line->p0->x += line->rules->xVelocity;
+            line->p0->y += line->rules->yVelocity;
+            line->p1->x += line->rules->xVelocity;
+            line->p1->y += line->rules->yVelocity;
+            didSomething = true;
+        }
+        if (type == TRIANGLE) {
+            Triangle *triangle = (Triangle*)shape;
+            triangle->p0->x += triangle->rules->xVelocity;
+            triangle->p0->y += triangle->rules->yVelocity;
+            triangle->p1->x += triangle->rules->xVelocity;
+            triangle->p1->y += triangle->rules->yVelocity;
+            triangle->p2->x += triangle->rules->xVelocity;
+            triangle->p2->y += triangle->rules->yVelocity;
+            didSomething = true;
+
+        }
+        if (type == RECTANGLE) {
+            Rectangle *rectangle = (Rectangle*)shape;
+            rectangle->topLeft->x += rectangle->rules->xVelocity;
+            rectangle->topLeft->y += rectangle->rules->yVelocity;
+            rectangle->bottomRight->x += rectangle->rules->xVelocity;
+            rectangle->bottomRight->y += rectangle->rules->yVelocity;
+            didSomething = true;
+        }
+        if (type == CIRCLE) {
+            Circle *circle = (Circle*)shape;
+            circle->center->x += circle->rules->xVelocity;
+            circle->center->y += circle->rules->yVelocity;
+            didSomething = true;
+        }
+        if (didSomething) {
+            return 0;
+        }
+    }
+    return -1;
+}
+
+static int HandleShapeCollision(void *shape, const unsigned int shapeType, const unsigned int collisionType) {
+    switch (collisionType) {
+    case NO_COLLISION:
+        return -1;
+    // TODO: All collision cases
+    default:
+        return -1;
+    }
+    return 0;
+}
+
+static int GetCollisionType(void *shape, const unsigned int type, const ShapeArray *shapes) {
+    // TODO:
+    // Check Boundaries
+    // Check Collision with Other Shapes
+    // Return the First Collision Type (i.e boundary or another shape)
+    // If no collision is detected, return NO_COLLISION
+    unsigned int collisionType = NO_COLLISION;
+    if (type == LINE) {
+        Line *line = (Line*)shape;
+    }
+    if (type == TRIANGLE) {
+        Triangle *triangle = (Triangle*)shape;
+    }
+    if (type == RECTANGLE) {
+        Rectangle *rectangle = (Rectangle*)shape;
+    }
+    if (type == CIRCLE) {
+        Circle *circle = (Circle*)shape;
+    }
+    return collisionType;
+}
+
+
 static int mRemoveLine(ShapeArray *shapes, void *shape) {
     size_t targetIndex = GetShapeIndex(shapes, shape, LINE);
     if (targetIndex >= 0) {
@@ -197,5 +274,52 @@ int RemoveShapeFromArray(ShapeArray *shapes, void *shape, const unsigned int typ
         }
     }
     printf("\nRemoveShapeFromArrayError: could not remove shape %p as ShapeArray %p returns a falsy value", shape, shapes);
+    return -1;
+}
+
+int HandleShapeArrayRules(ShapeArray *shapes) {
+	if (shapes) {
+		if ((shapes->lineArray) && (shapes->lineArray->size >= 1)) {
+			for (size_t i = 0; i < shapes->lineArray->size; i++) {
+				if (shapes->lineArray->lines[i]) {
+                    HandleShapeCollision(
+                        shapes->lineArray->lines[i], 
+                        LINE, GetCollisionType(shapes->lineArray->lines[i], LINE, shapes)
+                    );
+				}
+			}
+		}
+		if ((shapes->triangleArray) && (shapes->triangleArray->size >= 1)) {
+			for (size_t i = 0; i < shapes->triangleArray->size; i++) {
+				if (shapes->triangleArray->triangles[i]) {
+                    HandleShapeCollision(
+                        shapes->triangleArray->triangles[i], 
+                        TRIANGLE, GetCollisionType(shapes->triangleArray->triangles[i], TRIANGLE, shapes)
+                    );
+				}
+			}
+		}
+		if ((shapes->rectangleArray) && (shapes->rectangleArray->size >= 1)) {
+			for (size_t i = 0; i < shapes->rectangleArray->size; i++) {
+				if (shapes->rectangleArray->rectangles[i]) {
+                    HandleShapeCollision(
+                        shapes->rectangleArray->rectangles[i], 
+                        RECTANGLE, GetCollisionType(shapes->rectangleArray->rectangles[i], RECTANGLE, shapes)
+                    );
+				}
+			}
+		}
+		if ((shapes->circleArray) && (shapes->circleArray->size >= 1)) {
+			for (size_t i = 0; i < shapes->circleArray->size; i++) {
+				if (shapes->circleArray->circles[i]) {
+                    HandleShapeCollision(
+                        shapes->circleArray->circles[i], 
+                        CIRCLE, GetCollisionType(shapes->circleArray->circles[i], CIRCLE, shapes)
+                    );
+				}
+			}
+		}
+        return 0;
+	}
     return -1;
 }

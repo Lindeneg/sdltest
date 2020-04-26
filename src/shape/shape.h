@@ -52,4 +52,7 @@ int AddShapeToArray(ShapeArray *shapes, void *ptr, const unsigned int type);
 // Remove a given shape from a given ShapeArray
 int RemoveShapeFromArray(ShapeArray *shapes, void *shape, const unsigned int type);
 
+// Handle Rules assosiated with each shape in the ShapeArrays
+int HandleShapeArrayRules(ShapeArray *shapes);
+
 #endif /* SHAPE_SHAPE_H_ */
