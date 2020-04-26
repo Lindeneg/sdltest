@@ -40,9 +40,9 @@ typedef enum {
 
 // Constant representation of all available collision layers
 typedef enum {
-    PLAYER,
-    ENEMY,
-    NEUTRAL
+    PLAYER_COLLISION_LAYER,
+    ENEMY_COLLISION_LAYER,
+    NEUTRAL_COLLISION_LAYER
 } collisionLayers;
 
 // Constant representation of all available collision types
