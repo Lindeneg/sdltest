@@ -24,15 +24,15 @@ int main(void) {
 	ShapeArray * shapes = CreateEmptyShapeArray();
 
 
-	Line * line1 = CreateLine(CreateVector(250, 250), CreateVector(440, 440), RED);
-	Line * line2 = CreateLine(CreateVector(0, 800), CreateVector(800, 0), BLUE);
-	Line * line3 = CreateLine(CreateVector(440, 440), CreateVector(740, 0), LIGHT_BLUE);
+	Line * line1 = CreateLineFromPoints(250, 250, 440, 440, 0, 0, NO_COLLISION, RED);
+	Line * line2 = CreateLineFromPoints(0, 800, 800, 0, 0, 0, NO_COLLISION, BLUE);
+	Line * line3 = CreateLineFromPoints(440, 440, 740, 0, 0, 0, NO_COLLISION, LIGHT_BLUE);
 
-	Triangle * tri0 = CreateTriangle(CreateVector(0, 0), CreateVector(0, 400), CreateVector(400, 400), PURPLE, true);
+	Triangle * tri0 = CreateTriangleFromPoints(0, 0, 0, 400, 400, 400, 0, 0, NO_COLLISION, PURPLE, true);
 
-	Rectangle * rect = CreateRectangle(CreateVector(400, 600), CreateVector(550, 550), YELLOW, true);
+	Rectangle * rect = CreateRectangleFromPoints(400, 600, 550, 550, 0, 0, NO_COLLISION, YELLOW, true);
 
-	Circle * circ = CreateCircle(CreateVector(700, 700), 20, GREEN, true);
+	Circle * circ = CreateCircleFromPoints(700, 700, 20, 0, 0, NO_COLLISION, GREEN, true);
 
 	AddShapeToArray(shapes, line1, LINE);
 	AddShapeToArray(shapes, line2, LINE);
