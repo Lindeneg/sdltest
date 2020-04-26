@@ -275,10 +275,7 @@ int HandleShapeArrayRules(ShapeArray *shapes) {
 		if ((shapes->lineArray) && (shapes->lineArray->size >= 1)) {
 			for (size_t i = 0; i < shapes->lineArray->size; i++) {
 				if (shapes->lineArray->lines[i]) {
-                    HandleShapeCollision(
-                        shapes->lineArray->lines[i], 
-                        LINE, GetCollisionType(shapes->lineArray->lines[i], LINE, shapes)
-                    );
+                    HandleShapeCollision(shapes->lineArray->lines[i], LINE, GetCollisionType(shapes->lineArray->lines[i], LINE, shapes));
 				}
 			}
 		}
