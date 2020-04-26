@@ -8,14 +8,12 @@
 
 static int HandleShapeMovement(void *shape, const unsigned int type) {
     if (shape) {
-        bool didSomething = false;
         if (type == LINE) {
             Line *line = (Line*)shape;
             line->p0->x += line->rules->xVelocity;
             line->p0->y += line->rules->yVelocity;
             line->p1->x += line->rules->xVelocity;
             line->p1->y += line->rules->yVelocity;
-            didSomething = true;
         }
         if (type == TRIANGLE) {
             Triangle *triangle = (Triangle*)shape;
@@ -25,7 +23,6 @@ static int HandleShapeMovement(void *shape, const unsigned int type) {
             triangle->p1->y += triangle->rules->yVelocity;
             triangle->p2->x += triangle->rules->xVelocity;
             triangle->p2->y += triangle->rules->yVelocity;
-            didSomething = true;
 
         }
         if (type == RECTANGLE) {
@@ -34,17 +31,13 @@ static int HandleShapeMovement(void *shape, const unsigned int type) {
             rectangle->topLeft->y += rectangle->rules->yVelocity;
             rectangle->bottomRight->x += rectangle->rules->xVelocity;
             rectangle->bottomRight->y += rectangle->rules->yVelocity;
-            didSomething = true;
         }
         if (type == CIRCLE) {
             Circle *circle = (Circle*)shape;
             circle->center->x += circle->rules->xVelocity;
             circle->center->y += circle->rules->yVelocity;
-            didSomething = true;
         }
-        if (didSomething) {
-            return 0;
-        }
+        return 0;
     }
     return -1;
 }
@@ -292,19 +285,14 @@ int HandleShapeArrayRules(ShapeArray *shapes) {
 		if ((shapes->triangleArray) && (shapes->triangleArray->size >= 1)) {
 			for (size_t i = 0; i < shapes->triangleArray->size; i++) {
 				if (shapes->triangleArray->triangles[i]) {
-                    HandleShapeCollision(
-                        shapes->triangleArray->triangles[i], 
-                        TRIANGLE, GetCollisionType(shapes->triangleArray->triangles[i], TRIANGLE, shapes)
-                    );
+                    HandleShapeCollision(shapes->triangleArray->triangles[i], TRIANGLE, GetCollisionType(shapes->triangleArray->triangles[i], TRIANGLE, shapes));
 				}
 			}
 		}
 		if ((shapes->rectangleArray) && (shapes->rectangleArray->size >= 1)) {
 			for (size_t i = 0; i < shapes->rectangleArray->size; i++) {
 				if (shapes->rectangleArray->rectangles[i]) {
-                    HandleShapeCollision(
-                        shapes->rectangleArray->rectangles[i], 
-                        RECTANGLE, GetCollisionType(shapes->rectangleArray->rectangles[i], RECTANGLE, shapes)
+                    HandleShapeCollision(shapes->rectangleArray->rectangles[i], RECTANGLE, GetCollisionType(shapes->rectangleArray->rectangles[i], RECTANGLE, shapes)
                     );
 				}
 			}
@@ -312,10 +300,7 @@ int HandleShapeArrayRules(ShapeArray *shapes) {
 		if ((shapes->circleArray) && (shapes->circleArray->size >= 1)) {
 			for (size_t i = 0; i < shapes->circleArray->size; i++) {
 				if (shapes->circleArray->circles[i]) {
-                    HandleShapeCollision(
-                        shapes->circleArray->circles[i], 
-                        CIRCLE, GetCollisionType(shapes->circleArray->circles[i], CIRCLE, shapes)
-                    );
+                    HandleShapeCollision(shapes->circleArray->circles[i], CIRCLE, GetCollisionType(shapes->circleArray->circles[i], CIRCLE, shapes));
 				}
 			}
 		}
