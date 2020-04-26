@@ -6,7 +6,6 @@
 #include "../component/rectangle.h"
 #include "../component/circle.h"
 
-
 struct s_line_array {
     Line **lines;
     size_t size;
@@ -41,7 +40,6 @@ typedef struct s_shape_array ShapeArray;
 
 
 ShapeArray *CreateEmptyShapeArray(void);
-
 int AddShapeToArray(ShapeArray *shapes, void *ptr, const unsigned int type);
 int RemoveShapeFromArray(ShapeArray *shapes, void *shape, const unsigned int type);
 

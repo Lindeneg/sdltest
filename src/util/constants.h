@@ -9,6 +9,7 @@
 #define RECTANGLE_SIZE 4
 #define CIRCLE_SIZE 6
 
+// Constant representation of all available colors 
 typedef enum {
     BLACK,
     LIGHT_BLUE,
@@ -28,6 +29,7 @@ typedef enum {
     WHITE
 } colors;
 
+// Constant representation of all available shapes 
 typedef enum {
     VECTOR,
     LINE,
@@ -36,12 +38,14 @@ typedef enum {
     CIRCLE
 } shapes;
 
+// Constant representation of all available collision layers
 typedef enum {
     PLAYER,
     ENEMY,
     NEUTRAL
 } collisionLayers;
 
+// Constant representation of all available collision types
 typedef enum {
     NO_COLLISION,
     PLAYER_PLAYER_COLLISION,
