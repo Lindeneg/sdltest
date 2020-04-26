@@ -93,6 +93,7 @@ void FreeComponent(void *ptr, const unsigned int type) {
 		Line *line = (Line*)ptr;
 		FreeMem(line->p0);
 		FreeMem(line->p1);
+		FreeMem(line->rules);
 		FreeMem(line);
 	}
 	if (type == TRIANGLE) {
@@ -100,17 +101,20 @@ void FreeComponent(void *ptr, const unsigned int type) {
 		FreeMem(triangle->p0);
 		FreeMem(triangle->p1);
 		FreeMem(triangle->p2);
+		FreeMem(triangle->rules);
 		FreeMem(triangle);
 	}
 	if (type == RECTANGLE) {
 		Rectangle *rectangle = (Rectangle*)ptr;
 		FreeMem(rectangle->topLeft);
 		FreeMem(rectangle->bottomRight);
+		FreeMem(rectangle->rules);
 		FreeMem(rectangle);
 	}
 	if (type == CIRCLE) {
 		Circle *circle = (Circle*)ptr;
 		FreeMem(circle->center);
+		FreeMem(circle->rules);
 		FreeMem(circle);
 	}
 }
